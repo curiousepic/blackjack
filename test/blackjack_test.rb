@@ -85,6 +85,7 @@ class TestHand
 
     puts "You have a #{@deal1[:rank]} of #{@deal1[:suit]}"\
          " and a #{@deal2[:rank]} of #{@deal2[:suit]}."
+    puts "Your total is #{@deal1[:value] + @deal2[:value]}."
 
     # binding.pry
 
