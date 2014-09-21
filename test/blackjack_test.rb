@@ -1,6 +1,6 @@
 require 'pry'
 
-class AllCards # list of all the cards available to make a RoundDeck from
+class RoundDeck # The deck of all cards, reinitialized for each round
   attr_accessor :all_cards
 
   def initialize
@@ -61,31 +61,42 @@ class AllCards # list of all the cards available to make a RoundDeck from
   end
 end
 
-class RoundDeck
-  # makes a deck instance to use for the round in a specific order
-  # (NOT CURRENTLY REORDERING)
-  # ...I don't need to reorder/shuffle the array if I just pull a random card
-  # and then each round start from the full deck
-  attr_accessor :deck_order
-  def initialize
-    round_deck = AllCards.new
-    @deck_order = round_deck.all_cards
-  end
-end
+# class DeleteMe
+#   # makes a deck instance to use for the round in a specific order
+#   # (NOT CURRENTLY REORDERING)
+#   # ...I don't need to reorder/shuffle the array if I just pull a random card
+#   # and then each round start from the full deck
+#   attr_accessor :deck_order
+#
+#   def initialize
+#     round_deck = AllCards.new
+#     @deck_order = round_deck.all_cards
+#   end
+#
+# end
 
 class TestHand
   # gets dealt 2 cards, and allows them to be read to the player
-  attr_accessor :deal1, :deal2, :deal1name, :deal2name
+  attr_accessor :deal1, :deal2, :hand_total
+
   def initialize(dealer, deck)
     @deal1 = dealer.deal(deck)
     @deal2 = dealer.deal(deck)
   end
-  def read_hand
-    # tell me what the cards in the hand are
 
+  def total_hand
+    @hand_total = @deal1[:value] + @deal2[:value]
+  end
+
+  def read_hand
+    # tell me what the cards in the hand are, the total, and if Blackjack
+    self.total_hand
     puts "You have a #{@deal1[:rank]} of #{@deal1[:suit]}"\
-         " and a #{@deal2[:rank]} of #{@deal2[:suit]}."
-    puts "Your total is #{@deal1[:value] + @deal2[:value]}."
+    " and a #{@deal2[:rank]} of #{@deal2[:suit]}."
+    puts "Your total is #{@hand_total}."
+    if @hand_total == 21
+      puts "Blackjack!!!"
+    end
 
     # binding.pry
 
@@ -96,13 +107,24 @@ class TestDealer
   # give a random card from RoundDeck
   # (NOT CURRENTLY REMOVING FROM DECK, so duplicates will happen)
   attr_accessor :card
+
   def deal(d)
-    @card = (d.deck_order).sample
+    @card = (d.all_cards).sample
   end
+
+  def ask_hit
+    puts "Hit (H) or Stand (S)?"
+    answer = gets.chomp
+    if answer.downcase == "h"
+      self.deal
+    end
+  end
+
 end
 
 class Game
   attr_accessor :deck, :dealer, :test_hand
+
   def new_round
     @deck = RoundDeck.new
     @dealer = TestDealer.new
@@ -110,6 +132,7 @@ class Game
     @test_hand.read_hand
     self.ask_new_round
   end
+
   def ask_new_round
     puts "Would you like to play another round? Y/N"
     answer = gets.chomp
@@ -119,6 +142,7 @@ class Game
       exit
     end
   end
+
 end
 
 game = Game.new
@@ -127,13 +151,13 @@ game.new_round
 
 class Round
   # Handles what happens before, during, after a Round
-    # Before
-      # Shuffle Deck
-    # During
-      # ???
-    # After
-      # Clean up Hands, handle Wallet changes
-      # Ask if they want to play again
+  # Before
+  # Shuffle Deck
+  # During
+  # ???
+  # After
+  # Clean up Hands, handle Wallet changes
+  # Ask if they want to play again
   # Do I need this with what I have in Game?
 end
 
