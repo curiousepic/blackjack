@@ -8,55 +8,55 @@ class Deck # The deck of all cards, reinitialized for each round
       {suit: "Clubs", rank: "Ace", value: 11},
       {suit: "Clubs", rank: "2", value: 2},
       {suit: "Clubs", rank: "3", value: 3},
-      {suit: "Clubs", rank: "4", value: 4},
-      {suit: "Clubs", rank: "5", value: 5},
-      {suit: "Clubs", rank: "6", value: 6},
-      {suit: "Clubs", rank: "7", value: 7},
-      {suit: "Clubs", rank: "8", value: 8},
-      {suit: "Clubs", rank: "9", value: 9},
-      {suit: "Clubs", rank: "10", value: 10},
-      {suit: "Clubs", rank: "Jack", value: 10},
-      {suit: "Clubs", rank: "Queen", value: 10},
-      {suit: "Clubs", rank: "King", value: 10},
-      {suit: "Diamonds", rank: "Ace", value: 11},
-      {suit: "Diamonds", rank: "2", value: 2},
-      {suit: "Diamonds", rank: "3", value: 3},
-      {suit: "Diamonds", rank: "4", value: 4},
-      {suit: "Diamonds", rank: "5", value: 5},
-      {suit: "Diamonds", rank: "6", value: 6},
-      {suit: "Diamonds", rank: "7", value: 7},
-      {suit: "Diamonds", rank: "8", value: 8},
-      {suit: "Diamonds", rank: "9", value: 9},
-      {suit: "Diamonds", rank: "10", value: 10},
-      {suit: "Diamonds", rank: "Jack", value: 10},
-      {suit: "Diamonds", rank: "Queen", value: 10},
-      {suit: "Diamonds", rank: "King", value: 10},
-      {suit: "Hearts", rank: "Ace", value: 11},
-      {suit: "Hearts", rank: "2", value: 2},
-      {suit: "Hearts", rank: "3", value: 3},
-      {suit: "Hearts", rank: "4", value: 4},
-      {suit: "Hearts", rank: "5", value: 5},
-      {suit: "Hearts", rank: "6", value: 6},
-      {suit: "Hearts", rank: "7", value: 7},
-      {suit: "Hearts", rank: "8", value: 8},
-      {suit: "Hearts", rank: "9", value: 9},
-      {suit: "Hearts", rank: "10", value: 10},
-      {suit: "Hearts", rank: "Jack", value: 10},
-      {suit: "Hearts", rank: "Queen", value: 10},
-      {suit: "Hearts", rank: "King", value: 10},
-      {suit: "Spades", rank: "Ace", value: 11},
-      {suit: "Spades", rank: "2", value: 2},
-      {suit: "Spades", rank: "3", value: 3},
-      {suit: "Spades", rank: "4", value: 4},
-      {suit: "Spades", rank: "5", value: 5},
-      {suit: "Spades", rank: "6", value: 6},
-      {suit: "Spades", rank: "7", value: 7},
-      {suit: "Spades", rank: "8", value: 8},
-      {suit: "Spades", rank: "9", value: 9},
-      {suit: "Spades", rank: "10", value: 10},
-      {suit: "Spades", rank: "Jack", value: 10},
-      {suit: "Spades", rank: "Queen", value: 10},
-      {suit: "Spades", rank: "King", value: 10}
+      # {suit: "Clubs", rank: "4", value: 4},
+      # {suit: "Clubs", rank: "5", value: 5},
+      # {suit: "Clubs", rank: "6", value: 6},
+      # {suit: "Clubs", rank: "7", value: 7},
+      # {suit: "Clubs", rank: "8", value: 8},
+      # {suit: "Clubs", rank: "9", value: 9},
+      # {suit: "Clubs", rank: "10", value: 10},
+      # {suit: "Clubs", rank: "Jack", value: 10},
+      # {suit: "Clubs", rank: "Queen", value: 10},
+      # {suit: "Clubs", rank: "King", value: 10},
+      # {suit: "Diamonds", rank: "Ace", value: 11},
+      # {suit: "Diamonds", rank: "2", value: 2},
+      # {suit: "Diamonds", rank: "3", value: 3},
+      # {suit: "Diamonds", rank: "4", value: 4},
+      # {suit: "Diamonds", rank: "5", value: 5},
+      # {suit: "Diamonds", rank: "6", value: 6},
+      # {suit: "Diamonds", rank: "7", value: 7},
+      # {suit: "Diamonds", rank: "8", value: 8},
+      # {suit: "Diamonds", rank: "9", value: 9},
+      # {suit: "Diamonds", rank: "10", value: 10},
+      # {suit: "Diamonds", rank: "Jack", value: 10},
+      # {suit: "Diamonds", rank: "Queen", value: 10},
+      # {suit: "Diamonds", rank: "King", value: 10},
+      # {suit: "Hearts", rank: "Ace", value: 11},
+      # {suit: "Hearts", rank: "2", value: 2},
+      # {suit: "Hearts", rank: "3", value: 3},
+      # {suit: "Hearts", rank: "4", value: 4},
+      # {suit: "Hearts", rank: "5", value: 5},
+      # {suit: "Hearts", rank: "6", value: 6},
+      # {suit: "Hearts", rank: "7", value: 7},
+      # {suit: "Hearts", rank: "8", value: 8},
+      # {suit: "Hearts", rank: "9", value: 9},
+      # {suit: "Hearts", rank: "10", value: 10},
+      # {suit: "Hearts", rank: "Jack", value: 10},
+      # {suit: "Hearts", rank: "Queen", value: 10},
+      # {suit: "Hearts", rank: "King", value: 10},
+      # {suit: "Spades", rank: "Ace", value: 11},
+      # {suit: "Spades", rank: "2", value: 2},
+      # {suit: "Spades", rank: "3", value: 3},
+      # {suit: "Spades", rank: "4", value: 4},
+      # {suit: "Spades", rank: "5", value: 5},
+      # {suit: "Spades", rank: "6", value: 6},
+      # {suit: "Spades", rank: "7", value: 7},
+      # {suit: "Spades", rank: "8", value: 8},
+      # {suit: "Spades", rank: "9", value: 9},
+      # {suit: "Spades", rank: "10", value: 10},
+      # {suit: "Spades", rank: "Jack", value: 10},
+      # {suit: "Spades", rank: "Queen", value: 10},
+      # {suit: "Spades", rank: "King", value: 10}
     ]
   end
 end
@@ -66,8 +66,6 @@ class PlayerHand
   attr_accessor :hand_cards, :hand_total
 
   def initialize(dealer, deck)
-    # @deal1 = dealer.deal(deck)
-    # @deal2 = dealer.deal(deck)
     @hand_cards = [dealer.deal(deck), dealer.deal(deck)]
   end
 
@@ -84,15 +82,13 @@ class PlayerHand
     # tell me what the cards in the hand are, the total, and if Blackjack
     self.total_hand
 
-    puts "Your hand: "\
+    puts "Your hand: "
 
     @hand_cards.each do |c|
-      puts "#{c[:rank]} of #{c[:suit]}, "\
+      puts "#{c[:rank]} of #{c[:suit]}"
     end
 
     puts "Your total: #{@hand_total}"
-
-    # puts "Your hand: #{hand_list}"
 
     if @hand_total == 21
       puts "Blackjack!!!"
@@ -109,7 +105,9 @@ class Dealer
   attr_accessor :card
 
   def deal(d)
-    @card = (d.all_cards).sample
+    place = d.all_cards.find_index((d.all_cards).sample)
+
+    @card = d.all_cards.delete_at(place)
   end
 
   def ask_hit
