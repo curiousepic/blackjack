@@ -72,28 +72,6 @@ class RoundDeck
     @deck_order = round_deck.all_cards
   end
 end
-#
-# class Card
-#   # takes a card hash and allows things to be done to it
-#   attr_accessor :suit, :rank, :value
-#
-#   def initialize(card)
-#   @suit = card[:suit]
-#   @rank = card[:rank]
-#   @value = card[:value]
-#   end
-#
-#   def card_name
-#     "#{@rank} of #{@suit}"
-#   end
-#
-#   ## It's interesting (and maybe not idiomatic, though there might be good
-#   #  reasons to do it) that you have a whole list of things that look like
-#   #  cards in AllCards, and then when you want to manipulate a specific card,
-#   #  you have to instantiate another object to do it. But, if there is a reason
-#   #  for things to be set up this way, by all means continue.
-#
-# end
 
 class TestHand
   # gets dealt 2 cards, and allows them to be read to the player
@@ -104,9 +82,6 @@ class TestHand
   end
   def read_hand
     # tell me what the cards in the hand are
-
-    # @deal1name = Card.new(@deal1)
-    # @deal2name = Card.new(@deal2)
 
     puts "You have a #{@deal1[:rank]} of #{@deal1[:suit]}"\
          " and a #{@deal2[:rank]} of #{@deal2[:suit]}."
@@ -122,21 +97,45 @@ class TestDealer
   attr_accessor :card
   def deal(d)
     @card = (d.deck_order).sample
-
   end
 end
 
 class Game
   attr_accessor :deck, :dealer, :test_hand
-  def initialize
+  def new_round
     @deck = RoundDeck.new
     @dealer = TestDealer.new
     @test_hand = TestHand.new(@dealer, @deck)
     @test_hand.read_hand
+    self.ask_new_round
+  end
+  def ask_new_round
+    puts "Would you like to play another round? Y/N"
+    answer = gets.chomp
+    if answer.downcase == "y"
+      self.new_round
+    else
+      exit
+    end
   end
 end
 
 game = Game.new
+game.new_round
+
+
+class Round
+  # Handles what happens before, during, after a Round
+    # Before
+      # Shuffle Deck
+    # During
+      # ???
+    # After
+      # Clean up Hands, handle Wallet changes
+      # Ask if they want to play again
+  # Do I need this with what I have in Game?
+end
+
 
 
 class Hand
@@ -164,17 +163,6 @@ end
 
 class EvaluateScore
   # Looks at Hands and determines their score, handles variable Ace value
-end
-
-class Round
-  # Handles what happens before, during, after a Round
-    # Before
-      # Shuffle Deck
-    # During
-      # ???
-    # After
-      # Clean up Hands, handle Wallet changes
-      # Ask if they want to play again
 end
 
 class Bouncer
