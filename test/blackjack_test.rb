@@ -125,7 +125,9 @@ class DealerHand
   attr_accessor :hand_cards, :hand_total
 
   def initialize(dealer, deck)
-    @hand_cards = [dealer.deal(deck), dealer.deal(deck)]
+    @dealer = dealer
+    @deck = deck
+    @hand_cards = [@dealer.deal(@deck), @dealer.deal(@deck)]
   end
 
   def total_hand
@@ -145,7 +147,7 @@ class DealerHand
     puts "Dealer's total: #{@hand_total}"
     if @hand_total == 21
       puts "Blackjack!!! Dealer wins."
-    elsif @hand_total >= 17
+    elsif @hand_total > 16
       puts "Dealer must stand."
     else
       self.hit
@@ -153,9 +155,26 @@ class DealerHand
   end
 
   def hit
+    puts "Dealer hits:"
+    @hand_cards << @dealer.deal(@deck)
+    puts "#{@hand_cards.last[:rank]} of #{@hand_cards.last[:suit]}"
+    self.eval_hand
+  end
+
+  def eval_hand
+    self.total_hand
+    if @hand_total > 21
+      puts "Dealer busts! You win."
+    elsif @hand_total == 21
+      puts "Dealer stands."
+    elsif @hand_total > 16
+      puts "Dealer must stand."
+    else self.hit
+    end
   end
 
 end
+
 
 class Game
   attr_accessor :deck, :dealer, :test_hand
