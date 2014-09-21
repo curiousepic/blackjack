@@ -1,6 +1,6 @@
 require 'pry'
 
-class RoundDeck # The deck of all cards, reinitialized for each round
+class Deck # The deck of all cards, reinitialized for each round
   attr_accessor :all_cards
 
   def initialize
@@ -61,39 +61,39 @@ class RoundDeck # The deck of all cards, reinitialized for each round
   end
 end
 
-# class DeleteMe
-#   # makes a deck instance to use for the round in a specific order
-#   # (NOT CURRENTLY REORDERING)
-#   # ...I don't need to reorder/shuffle the array if I just pull a random card
-#   # and then each round start from the full deck
-#   attr_accessor :deck_order
-#
-#   def initialize
-#     round_deck = AllCards.new
-#     @deck_order = round_deck.all_cards
-#   end
-#
-# end
-
-class TestHand
+class PlayerHand
   # gets dealt 2 cards, and allows them to be read to the player
-  attr_accessor :deal1, :deal2, :hand_total
+  attr_accessor :hand_cards, :hand_total
 
   def initialize(dealer, deck)
-    @deal1 = dealer.deal(deck)
-    @deal2 = dealer.deal(deck)
+    # @deal1 = dealer.deal(deck)
+    # @deal2 = dealer.deal(deck)
+    @hand_cards = [dealer.deal(deck), dealer.deal(deck)]
   end
 
   def total_hand
-    @hand_total = @deal1[:value] + @deal2[:value]
+    # sum the values in the hand_cards array
+    @hand_total = 0
+    @hand_cards.each do |c|
+      @hand_total = @hand_total + c[:value]
+    end
+
   end
 
   def read_hand
     # tell me what the cards in the hand are, the total, and if Blackjack
     self.total_hand
-    puts "You have a #{@deal1[:rank]} of #{@deal1[:suit]}"\
-    " and a #{@deal2[:rank]} of #{@deal2[:suit]}."
-    puts "Your total is #{@hand_total}."
+
+    puts "Your hand: "\
+
+    @hand_cards.each do |c|
+      puts "#{c[:rank]} of #{c[:suit]}, "\
+    end
+
+    puts "Your total: #{@hand_total}"
+
+    # puts "Your hand: #{hand_list}"
+
     if @hand_total == 21
       puts "Blackjack!!!"
     end
@@ -103,8 +103,8 @@ class TestHand
   end
 end
 
-class TestDealer
-  # give a random card from RoundDeck
+class Dealer
+  # give a random card from Deck
   # (NOT CURRENTLY REMOVING FROM DECK, so duplicates will happen)
   attr_accessor :card
 
@@ -113,6 +113,7 @@ class TestDealer
   end
 
   def ask_hit
+    # not used yet
     puts "Hit (H) or Stand (S)?"
     answer = gets.chomp
     if answer.downcase == "h"
@@ -126,9 +127,9 @@ class Game
   attr_accessor :deck, :dealer, :test_hand
 
   def new_round
-    @deck = RoundDeck.new
-    @dealer = TestDealer.new
-    @test_hand = TestHand.new(@dealer, @deck)
+    @deck = Deck.new
+    @dealer = Dealer.new
+    @test_hand = PlayerHand.new(@dealer, @deck)
     @test_hand.read_hand
     self.ask_new_round
   end
