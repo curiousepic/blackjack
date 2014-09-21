@@ -1,5 +1,14 @@
 require 'pry'
 
+# TO-DO
+# Hitting and Standing
+# Busting
+# Handling Ace variable value
+# The Dealer's hand and score eval
+# Winning evaluation
+# Wagering
+
+
 class Deck # The deck of all cards, reinitialized for each round
   attr_accessor :all_cards
 
@@ -8,7 +17,7 @@ class Deck # The deck of all cards, reinitialized for each round
       {suit: "Clubs", rank: "Ace", value: 11},
       {suit: "Clubs", rank: "2", value: 2},
       {suit: "Clubs", rank: "3", value: 3},
-      # {suit: "Clubs", rank: "4", value: 4},
+      {suit: "Clubs", rank: "4", value: 4},
       # {suit: "Clubs", rank: "5", value: 5},
       # {suit: "Clubs", rank: "6", value: 6},
       # {suit: "Clubs", rank: "7", value: 7},
@@ -75,38 +84,29 @@ class PlayerHand
     @hand_cards.each do |c|
       @hand_total = @hand_total + c[:value]
     end
-
   end
 
   def read_hand
     # tell me what the cards in the hand are, the total, and if Blackjack
     self.total_hand
-
     puts "Your hand: "
-
     @hand_cards.each do |c|
       puts "#{c[:rank]} of #{c[:suit]}"
     end
-
     puts "Your total: #{@hand_total}"
-
     if @hand_total == 21
-      puts "Blackjack!!!"
+      puts "Blackjack!!! You win."
     end
-
-    # binding.pry
-
   end
+
 end
 
 class Dealer
-  # give a random card from Deck
-  # (NOT CURRENTLY REMOVING FROM DECK, so duplicates will happen)
   attr_accessor :card
 
   def deal(d)
+    # give a random card from Deck and remove it from Deck
     place = d.all_cards.find_index((d.all_cards).sample)
-
     @card = d.all_cards.delete_at(place)
   end
 
@@ -115,7 +115,36 @@ class Dealer
     puts "Hit (H) or Stand (S)?"
     answer = gets.chomp
     if answer.downcase == "h"
-      self.deal
+
+    end
+  end
+
+end
+
+class DealerHand
+  attr_accessor :hand_cards, :hand_total
+
+  def initialize(dealer, deck)
+    @hand_cards = [dealer.deal(deck), dealer.deal(deck)]
+  end
+
+  def total_hand
+    # sum the values in the hand_cards array
+    @hand_total = 0
+    @hand_cards.each do |c|
+      @hand_total = @hand_total + c[:value]
+    end
+  end
+
+  def play
+    self.total_hand
+    puts "Dealer's hand:"
+    @hand_cards.each do |c|
+      puts "#{c[:rank]} of #{c[:suit]}"
+    end
+    puts "Dealer's total: #{@hand_total}"
+    if @hand_total == 21
+      puts "Blackjack!!! Dealer wins."
     end
   end
 
@@ -128,12 +157,14 @@ class Game
     @deck = Deck.new
     @dealer = Dealer.new
     @test_hand = PlayerHand.new(@dealer, @deck)
+    @dealer_hand = DealerHand.new(@dealer, @deck)
     @test_hand.read_hand
+    @dealer_hand.play
     self.ask_new_round
   end
 
   def ask_new_round
-    puts "Would you like to play another round? Y/N"
+    puts "Another round? Y/N"
     answer = gets.chomp
     if answer.downcase == "y"
       self.new_round
@@ -147,6 +178,8 @@ end
 game = Game.new
 game.new_round
 
+
+# Currently unused Classes
 
 class Round
   # Handles what happens before, during, after a Round
