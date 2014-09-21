@@ -72,28 +72,28 @@ class RoundDeck
     @deck_order = round_deck.all_cards
   end
 end
-
-class Card
-  # takes a card hash and allows things to be done to it
-  attr_accessor :suit, :rank, :value
-
-  def initialize(card)
-  @suit = card[:suit]
-  @rank = card[:rank]
-  @value = card[:value]
-  end
-
-  def card_name
-    "#{@rank} of #{@suit}"
-  end
-
-  ## It's interesting (and maybe not idiomatic, though there might be good
-  #  reasons to do it) that you have a whole list of things that look like
-  #  cards in AllCards, and then when you want to manipulate a specific card,
-  #  you have to instantiate another object to do it. But, if there is a reason
-  #  for things to be set up this way, by all means continue.
-
-end
+#
+# class Card
+#   # takes a card hash and allows things to be done to it
+#   attr_accessor :suit, :rank, :value
+#
+#   def initialize(card)
+#   @suit = card[:suit]
+#   @rank = card[:rank]
+#   @value = card[:value]
+#   end
+#
+#   def card_name
+#     "#{@rank} of #{@suit}"
+#   end
+#
+#   ## It's interesting (and maybe not idiomatic, though there might be good
+#   #  reasons to do it) that you have a whole list of things that look like
+#   #  cards in AllCards, and then when you want to manipulate a specific card,
+#   #  you have to instantiate another object to do it. But, if there is a reason
+#   #  for things to be set up this way, by all means continue.
+#
+# end
 
 class TestHand
   # gets dealt 2 cards, and allows them to be read to the player
@@ -104,11 +104,12 @@ class TestHand
   end
   def read_hand
     # tell me what the cards in the hand are
-    @deal1name = Card.new(@deal1)
-    @deal2name = Card.new(@deal2)
 
-    puts "You have a #{@deal1name.card_name}"\
-         " and a #{@deal2name.card_name}."
+    # @deal1name = Card.new(@deal1)
+    # @deal2name = Card.new(@deal2)
+
+    puts "You have a #{@deal1[:rank]} of #{@deal1[:suit]}"\
+         " and a #{@deal2[:rank]} of #{@deal2[:suit]}."
 
     # binding.pry
 
