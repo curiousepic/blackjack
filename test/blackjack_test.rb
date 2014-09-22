@@ -1,9 +1,8 @@
 require 'pry'
 
 # TO-DO
-# Busting, Hitting, and Standing for player
 # Winning evaluation
-# Wagering
+# Betting/wagering
 
 
 class Deck # The deck of all cards, reinitialized for each round
@@ -72,7 +71,9 @@ class PlayerHand
   attr_accessor :hand_cards, :hand_total
 
   def initialize(dealer, deck)
-    @hand_cards = [dealer.deal(deck), dealer.deal(deck)]
+    @dealer = dealer
+    @deck = deck
+    @hand_cards = [@dealer.deal(@deck), @dealer.deal(@deck)]
   end
 
   def total_hand
@@ -81,10 +82,29 @@ class PlayerHand
     @hand_cards.each do |c|
       @hand_total = @hand_total + c[:value]
     end
+    # check for an ace and score over 21
+    if @hand_total > 21 &&
+      @hand_cards.find do |v|
+        v[:value] == 11
+      end
+      self.ace_handler
+    else
+      @hand_total
+    end
   end
 
-  def read_hand
-    # tell me what the cards in the hand are, the total, and if Blackjack
+  def ace_handler
+    # make the hand's ace(s) value = 1
+    puts "This hand has an Ace and is over 21. Making Ace worth 1."
+    ace = @hand_cards.find do |v|
+      v[:value] == 11
+    end
+    ace[:value] = 1
+    self.total_hand
+  end
+
+  def play
+    # start the player's turn
     self.total_hand
     puts "Your hand: "
     @hand_cards.each do |c|
@@ -92,7 +112,29 @@ class PlayerHand
     end
     puts "Your total: #{@hand_total}"
     if @hand_total == 21
-      puts "Blackjack!!! You win."
+      puts "Blackjack!!!"
+    else
+      self.hit
+    end
+  end
+
+  def hit
+    puts "(H)it or (S)tand?"
+    answer = gets.chomp
+    if answer.downcase == "h"
+      puts "You hit:"
+      @hand_cards << @dealer.deal(@deck)
+      puts "#{@hand_cards.last[:rank]} of #{@hand_cards.last[:suit]}"
+    end
+  end
+
+  def eval_hand
+    self.total_hand
+    if @hand_total > 21
+      puts "You bust at #{@hand_total}!"
+    elsif @hand_total == 21
+      puts "21!"
+    else self.hit
     end
   end
 
@@ -112,7 +154,7 @@ class Dealer
     puts "Hit (H) or Stand (S)?"
     answer = gets.chomp
     if answer.downcase == "h"
-
+      # ???
     end
   end
 
@@ -177,6 +219,8 @@ class DealerHand
     self.total_hand
     if @hand_total > 21
       puts "Dealer busts at #{@hand_total}! You win."
+    elsif @hand_total == 21 && @hand_cards.length == 2
+      puts "Blackjack!!! Dealer wins."
     elsif @hand_total == 21
       puts "Dealer stands."
     elsif @hand_total > 16
@@ -197,7 +241,7 @@ class Game
     @dealer = Dealer.new
     @test_hand = PlayerHand.new(@dealer, @deck)
     @dealer_hand = DealerHand.new(@dealer, @deck)
-    @test_hand.read_hand
+    @test_hand.play
     @dealer_hand.play
     self.ask_new_round
   end
@@ -222,17 +266,13 @@ game.new_round
 
 class Round
   # Handles what happens before, during, after a Round
-  # Before
-  # Shuffle Deck
   # During
   # ???
   # After
   # Clean up Hands, handle Wallet changes
   # Ask if they want to play again
-  # Do I need this with what I have in Game?
+  # Do I need this, with what I have in Game?
 end
-
-
 
 class Hand
   # A set of cards that the Player and Dealer will have
