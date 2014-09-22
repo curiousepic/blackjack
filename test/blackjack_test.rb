@@ -1,7 +1,6 @@
 require 'pry'
 
 # TO-DO
-# Winning evaluation
 # Betting/wagering
 
 
@@ -125,6 +124,7 @@ class PlayerHand
       puts "You hit:"
       @hand_cards << @dealer.deal(@deck)
       puts "#{@hand_cards.last[:rank]} of #{@hand_cards.last[:suit]}"
+      self.eval_hand
     end
   end
 
@@ -134,7 +134,9 @@ class PlayerHand
       puts "You bust at #{@hand_total}!"
     elsif @hand_total == 21
       puts "21!"
-    else self.hit
+    else
+      puts "Your total: #{@hand_total}"
+      self.hit
     end
   end
 
@@ -218,13 +220,11 @@ class DealerHand
     # have dealer hit or stand in right circumstances
     self.total_hand
     if @hand_total > 21
-      puts "Dealer busts at #{@hand_total}! You win."
+      puts "Dealer busts at #{@hand_total}."
     elsif @hand_total == 21 && @hand_cards.length == 2
       puts "Blackjack!!! Dealer wins."
-    elsif @hand_total == 21
-      puts "Dealer stands."
     elsif @hand_total > 16
-      puts "Dealer must stand at #{@hand_total}."
+      puts "Dealer stands at #{@hand_total}."
     else self.hit
     end
   end
@@ -233,16 +233,18 @@ end
 
 
 class Game
-  attr_accessor :deck, :dealer, :test_hand
+  attr_accessor :deck, :dealer, :player_hand, :dealer_hand
 
   def new_round
     puts "\n\n"
     @deck = Deck.new
     @dealer = Dealer.new
-    @test_hand = PlayerHand.new(@dealer, @deck)
+    @player_hand = PlayerHand.new(@dealer, @deck)
     @dealer_hand = DealerHand.new(@dealer, @deck)
-    @test_hand.play
+    @player_hand.play
+    self.check_bust
     @dealer_hand.play
+    self.check_winner
     self.ask_new_round
   end
 
@@ -255,6 +257,42 @@ class Game
       exit
     end
   end
+
+  def check_bust
+    puts "Checking for bust..."
+    if @player_hand.hand_total > 21
+      puts "Player busts and loses!"
+      self.ask_new_round
+    else
+      puts "No player bust."
+    end
+  end
+
+  def check_winner
+    puts "Checking for winner..."
+    if @player_hand.hand_cards.length == 2 &&
+      @dealer_hand.hand_cards.length == 2 &&
+      @player_hand.hand_total == 21 &&
+      @dealer_hand.hand_total == 21
+      puts "Dealer's Blackjack trumps yours!!! Better luck next time."
+    elsif
+      @player_hand.hand_cards.length == 2 &&
+      @player_hand.hand_total == 21
+      puts "You win with a Blackjack!!!"
+    elsif
+      @dealer_hand.hand_total > 21
+      puts "Dealer busted, you win!"
+    elsif
+      @player_hand.hand_total == @dealer_hand.hand_total
+      puts "Push! No winner this round."
+    elsif
+      @player_hand.hand_total > @dealer_hand.hand_total
+      puts "With a higher score, you win!"
+    else
+      puts "With a higher score, the dealer wins."
+    end
+  end
+
 
 end
 
