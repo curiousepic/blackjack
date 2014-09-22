@@ -2,7 +2,6 @@ require 'pry'
 
 # TO-DO
 # Busting, Hitting, and Standing for player
-# Handling Ace variable value
 # Winning evaluation
 # Wagering
 
@@ -13,44 +12,44 @@ class Deck # The deck of all cards, reinitialized for each round
   def initialize
     @all_cards = [
       {suit: "Clubs", rank: "Ace", value: 11},
-      # {suit: "Clubs", rank: "2", value: 2},
-      # {suit: "Clubs", rank: "3", value: 3},
-      # {suit: "Clubs", rank: "4", value: 4},
-      # {suit: "Clubs", rank: "5", value: 5},
-      # {suit: "Clubs", rank: "6", value: 6},
-      # {suit: "Clubs", rank: "7", value: 7},
-      # {suit: "Clubs", rank: "8", value: 8},
-      # {suit: "Clubs", rank: "9", value: 9},
-      # {suit: "Clubs", rank: "10", value: 10},
-      # {suit: "Clubs", rank: "Jack", value: 10},
-      # {suit: "Clubs", rank: "Queen", value: 10},
-      # {suit: "Clubs", rank: "King", value: 10},
+      {suit: "Clubs", rank: "2", value: 2},
+      {suit: "Clubs", rank: "3", value: 3},
+      {suit: "Clubs", rank: "4", value: 4},
+      {suit: "Clubs", rank: "5", value: 5},
+      {suit: "Clubs", rank: "6", value: 6},
+      {suit: "Clubs", rank: "7", value: 7},
+      {suit: "Clubs", rank: "8", value: 8},
+      {suit: "Clubs", rank: "9", value: 9},
+      {suit: "Clubs", rank: "10", value: 10},
+      {suit: "Clubs", rank: "Jack", value: 10},
+      {suit: "Clubs", rank: "Queen", value: 10},
+      {suit: "Clubs", rank: "King", value: 10},
       {suit: "Diamonds", rank: "Ace", value: 11},
-      # {suit: "Diamonds", rank: "2", value: 2},
-      # {suit: "Diamonds", rank: "3", value: 3},
-      # {suit: "Diamonds", rank: "4", value: 4},
-      # {suit: "Diamonds", rank: "5", value: 5},
-      # {suit: "Diamonds", rank: "6", value: 6},
-      # {suit: "Diamonds", rank: "7", value: 7},
-      # {suit: "Diamonds", rank: "8", value: 8},
-      # {suit: "Diamonds", rank: "9", value: 9},
-      # {suit: "Diamonds", rank: "10", value: 10},
-      # {suit: "Diamonds", rank: "Jack", value: 10},
-      # {suit: "Diamonds", rank: "Queen", value: 10},
-      # {suit: "Diamonds", rank: "King", value: 10},
+      {suit: "Diamonds", rank: "2", value: 2},
+      {suit: "Diamonds", rank: "3", value: 3},
+      {suit: "Diamonds", rank: "4", value: 4},
+      {suit: "Diamonds", rank: "5", value: 5},
+      {suit: "Diamonds", rank: "6", value: 6},
+      {suit: "Diamonds", rank: "7", value: 7},
+      {suit: "Diamonds", rank: "8", value: 8},
+      {suit: "Diamonds", rank: "9", value: 9},
+      {suit: "Diamonds", rank: "10", value: 10},
+      {suit: "Diamonds", rank: "Jack", value: 10},
+      {suit: "Diamonds", rank: "Queen", value: 10},
+      {suit: "Diamonds", rank: "King", value: 10},
       {suit: "Hearts", rank: "Ace", value: 11},
-      # {suit: "Hearts", rank: "2", value: 2},
-      # {suit: "Hearts", rank: "3", value: 3},
-      # {suit: "Hearts", rank: "4", value: 4},
-      # {suit: "Hearts", rank: "5", value: 5},
-      # {suit: "Hearts", rank: "6", value: 6},
-      # {suit: "Hearts", rank: "7", value: 7},
-      # {suit: "Hearts", rank: "8", value: 8},
-      # {suit: "Hearts", rank: "9", value: 9},
-      # {suit: "Hearts", rank: "10", value: 10},
-      # {suit: "Hearts", rank: "Jack", value: 10},
-      # {suit: "Hearts", rank: "Queen", value: 10},
-      # {suit: "Hearts", rank: "King", value: 10},
+      {suit: "Hearts", rank: "2", value: 2},
+      {suit: "Hearts", rank: "3", value: 3},
+      {suit: "Hearts", rank: "4", value: 4},
+      {suit: "Hearts", rank: "5", value: 5},
+      {suit: "Hearts", rank: "6", value: 6},
+      {suit: "Hearts", rank: "7", value: 7},
+      {suit: "Hearts", rank: "8", value: 8},
+      {suit: "Hearts", rank: "9", value: 9},
+      {suit: "Hearts", rank: "10", value: 10},
+      {suit: "Hearts", rank: "Jack", value: 10},
+      {suit: "Hearts", rank: "Queen", value: 10},
+      {suit: "Hearts", rank: "King", value: 10},
       {suit: "Spades", rank: "Ace", value: 11},
       {suit: "Spades", rank: "2", value: 2},
       {suit: "Spades", rank: "3", value: 3},
@@ -130,26 +129,24 @@ class DealerHand
 
   def total_hand
     # sum the values in the hand_cards array
-    # DOESN'T YET HANDLE ACES
     @hand_total = 0
     @hand_cards.each do |c|
       @hand_total = @hand_total + c[:value]
     end
+    # check for an ace and score over 21
     if @hand_total > 21 &&
       @hand_cards.find do |v|
         v[:value] == 11
       end
-      puts "This hand has an Ace and is over 21. Making Ace worth 1."
       self.ace_handler
     else
       @hand_total
     end
-
-    # Above doesn't work - need to learn how to change the value of the
-    # Ace's Value in the hash in the hand array
   end
 
   def ace_handler
+    # make the hand's ace(s) value = 1
+    puts "This hand has an Ace and is over 21. Making Ace worth 1."
     ace = @hand_cards.find do |v|
       v[:value] == 11
     end
@@ -157,24 +154,18 @@ class DealerHand
     self.total_hand
   end
 
-
-
   def play
+    # begin dealer's turn
     self.total_hand
     puts "\nDealer's hand:"
     @hand_cards.each do |c|
       puts "#{c[:rank]} of #{c[:suit]}"
     end
-    if @hand_total == 21
-      puts "Blackjack!!! Dealer wins."
-    elsif @hand_total > 16
-      puts "Dealer must stand at #{@hand_total}."
-    else
-      self.hit
-    end
+    self.eval_hand
   end
 
   def hit
+    # give dealer's hand a new card
     puts "Dealer hits:"
     @hand_cards << @dealer.deal(@deck)
     puts "#{@hand_cards.last[:rank]} of #{@hand_cards.last[:suit]}"
@@ -182,6 +173,7 @@ class DealerHand
   end
 
   def eval_hand
+    # have dealer hit or stand in right circumstances
     self.total_hand
     if @hand_total > 21
       puts "Dealer busts at #{@hand_total}! You win."
