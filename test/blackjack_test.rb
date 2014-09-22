@@ -231,7 +231,6 @@ class DealerHand
 
 end
 
-
 class Game
   attr_accessor :deck, :dealer, :player_hand, :dealer_hand
 
@@ -302,30 +301,6 @@ game.new_round
 
 # Currently unused Classes
 
-class Round
-  # Handles what happens before, during, after a Round
-  # During
-  # ???
-  # After
-  # Clean up Hands, handle Wallet changes
-  # Ask if they want to play again
-  # Do I need this, with what I have in Game?
-end
-
-class Hand
-  # A set of cards that the Player and Dealer will have
-end
-
-class Dealer
-  # Removes a card from the Deck
-  # and assigns it to a Hand
-  # Prompts user for Hitting or Standing?
-  # Called by Round?
-end
-
-class Player
-  # Keeps track of the Player's... stuff
-end
 
 class Money
   # What Money is - bets = $10
@@ -333,10 +308,6 @@ end
 
 class Wallet
   # Holds the Player's money - starts at $100
-end
-
-class EvaluateScore
-  # Looks at Hands and determines their score, handles variable Ace value
 end
 
 class Bouncer
