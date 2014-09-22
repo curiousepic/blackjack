@@ -135,23 +135,29 @@ class DealerHand
     @hand_cards.each do |c|
       @hand_total = @hand_total + c[:value]
     end
-    # if @hand_total > 21 &&
-    #   @hand_cards.find do |v|
-    #     v[:value] == 11
-    #   end
-    #   puts "This hand has an Ace and is over 21. Making Ace worth 1."
-    #   ace = @hand_cards.find do |v|
-    #     v[:value] == 11
-    #   end
-    #   ace[:value] = 1
-    #   @hand_total
-    # else
-    #   @hand_total
-    # end
+    if @hand_total > 21 &&
+      @hand_cards.find do |v|
+        v[:value] == 11
+      end
+      puts "This hand has an Ace and is over 21. Making Ace worth 1."
+      self.ace_handler
+    else
+      @hand_total
+    end
 
     # Above doesn't work - need to learn how to change the value of the
     # Ace's Value in the hash in the hand array
   end
+
+  def ace_handler
+    ace = @hand_cards.find do |v|
+      v[:value] == 11
+    end
+    ace[:value] = 1
+    self.total_hand
+  end
+
+
 
   def play
     self.total_hand
@@ -159,11 +165,10 @@ class DealerHand
     @hand_cards.each do |c|
       puts "#{c[:rank]} of #{c[:suit]}"
     end
-    puts "Dealer's total: #{@hand_total}"
     if @hand_total == 21
       puts "Blackjack!!! Dealer wins."
     elsif @hand_total > 16
-      puts "Dealer must stand."
+      puts "Dealer must stand at #{@hand_total}."
     else
       self.hit
     end
@@ -179,11 +184,11 @@ class DealerHand
   def eval_hand
     self.total_hand
     if @hand_total > 21
-      puts "Dealer busts! You win."
+      puts "Dealer busts at #{@hand_total}! You win."
     elsif @hand_total == 21
       puts "Dealer stands."
     elsif @hand_total > 16
-      puts "Dealer must stand."
+      puts "Dealer must stand at #{@hand_total}."
     else self.hit
     end
   end
